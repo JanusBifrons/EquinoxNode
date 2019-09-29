@@ -13,7 +13,7 @@ if (typeof Array.prototype.clear !== 'function') {
     }
 }
 else {
-    throw new Error("This dialog cannot start due to a compatibility issue (1). Please contact CML Support.");
+    throw new Error("This dialog cannot start due to a compatibility issue (1).");
 }
 
 if (typeof Array.prototype.remove !== 'function') {
@@ -22,5 +22,5 @@ if (typeof Array.prototype.remove !== 'function') {
     }
 }
 else {
-    throw new Error("This dialog cannot start due to a compatibility issue (1). Please contact CML Support.");
+    throw new Error("This dialog cannot start due to a compatibility issue (1).");
 }

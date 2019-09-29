@@ -98,19 +98,19 @@ if (typeof String.isNullOrEmpty !== 'function') {
     String.isNullOrEmpty = (str: string) => !str;
 }
 else {
-    throw new Error("This dialog cannot start due to a compatibility issue (1). Please contact CML Support.");
+    throw new Error("This dialog cannot start due to a compatibility issue (1).");
 }
 
 if (typeof String.isNullOrWhiteSpace !== 'function') {
     String.isNullOrWhiteSpace = (str: string) => { return (!str || (str.trim().length <= 0)) };
 }
 else {
-    throw new Error("This dialog cannot start due to a compatibility issue (1). Please contact CML Support.");
+    throw new Error("This dialog cannot start due to a compatibility issue (1).");
 }
 
 if (typeof String.empty !== 'string') {
     String.empty = "";
 }
 else {
-    throw new Error("This dialog cannot start due to a compatibility issue (1). Please contact CML Support.");
+    throw new Error("This dialog cannot start due to a compatibility issue (1).");
 }
