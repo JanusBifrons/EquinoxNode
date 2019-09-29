@@ -1,0 +1,25 @@
+{
+  "name": "asteroidsbr",
+  "version": "1.0.0",
+  "description": "An asteroids battle royale!",
+  "main": "Main.ts",
+  "dependencies": {
+    "@types/express": "^4.16.1",
+    "@types/sat": "0.0.30",
+    "@types/socket.io": "^2.1.2",
+    "@types/typescript": "^2.0.0",
+    "@types/uuid": "^3.4.4",
+    "express": "^4.16.4",
+    "sat": "^0.8.0",
+    "socket.io": "^2.2.0",
+    "typescript": "^3.3.4000",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "npm run copy-index && node ./dist/server/abr.js",
+    "copy-index": "copyfiles ./src/client/index.html ./dist/client/ --flat"
+  },
+  "author": "Alec Vickers",
+  "license": "MIT"
+}
