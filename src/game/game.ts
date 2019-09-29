@@ -67,7 +67,7 @@ namespace FireHare.Asteroids {
                 if(cObject.team.equals(cOtherObject.team))
                     return;    
 
-                this._cCollisionManager.collisionCheck(cObject, cOtherObject);
+                //this._cCollisionManager.collisionCheck(cObject, cOtherObject);
 
                 return;
                 

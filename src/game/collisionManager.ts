@@ -18,18 +18,3 @@ namespace FireHare.Asteroids {
         }
     }
 }
-
-// namespace SAT {
-//     export class Circle {
-//         constructor(cVector: Vector, nRadius: number) {
-
-//         }
-//     };
-//     export class Vector {
-//         constructor(nX: number, nY: number) {
-
-//         }
-//     };
-//     export function pointInCircle() {};
-//     export function testCircleCircle(c1: Circle, c2: Circle, a1: any): any {};
-// }

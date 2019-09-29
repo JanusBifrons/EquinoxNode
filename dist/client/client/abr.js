@@ -1887,7 +1887,7 @@ var FireHare;
                         continue;
                     if (cObject.team.equals(cOtherObject.team))
                         return;
-                    this._cCollisionManager.collisionCheck(cObject, cOtherObject);
+                    //this._cCollisionManager.collisionCheck(cObject, cOtherObject);
                     return;
                     var nRadii = cObject.radius + cOtherObject.radius;
                     var nDistance = FireHare.Vector.Distance(cObject.position, cOtherObject.position);
@@ -2235,18 +2235,6 @@ var FireHare;
         Asteroids.CollisionManager = CollisionManager;
     })(Asteroids = FireHare.Asteroids || (FireHare.Asteroids = {}));
 })(FireHare || (FireHare = {}));
-// namespace SAT {
-//     export class Circle {
-//         constructor(cVector: Vector, nRadius: number) {
-//         }
-//     };
-//     export class Vector {
-//         constructor(nX: number, nY: number) {
-//         }
-//     };
-//     export function pointInCircle() {};
-//     export function testCircleCircle(c1: Circle, c2: Circle, a1: any): any {};
-// }
 var FireHare;
 (function (FireHare) {
     var Asteroids;

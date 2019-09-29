@@ -928,18 +928,6 @@ var FireHare;
         Asteroids.CollisionManager = CollisionManager;
     })(Asteroids = FireHare.Asteroids || (FireHare.Asteroids = {}));
 })(FireHare || (FireHare = {}));
-// namespace SAT {
-//     export class Circle {
-//         constructor(cVector: Vector, nRadius: number) {
-//         }
-//     };
-//     export class Vector {
-//         constructor(nX: number, nY: number) {
-//         }
-//     };
-//     export function pointInCircle() {};
-//     export function testCircleCircle(c1: Circle, c2: Circle, a1: any): any {};
-// }
 var FireHare;
 (function (FireHare) {
     var Asteroids;
@@ -982,7 +970,7 @@ var FireHare;
                         continue;
                     if (cObject.team.equals(cOtherObject.team))
                         return;
-                    this._cCollisionManager.collisionCheck(cObject, cOtherObject);
+                    //this._cCollisionManager.collisionCheck(cObject, cOtherObject);
                     return;
                     var nRadii = cObject.radius + cOtherObject.radius;
                     var nDistance = FireHare.Vector.Distance(cObject.position, cOtherObject.position);
@@ -2700,7 +2688,6 @@ var FireHare;
                 this._cHttp = require('http').Server(this._cApp);
                 this._cPath = require('path');
                 this._cSocketServer = require('socket.io')(this._cHttp);
-                console.log(this._cSAT);
                 FireHare.Timer.Init();
                 this._liPlayers = [];
                 this._liSockets = [];
@@ -2713,8 +2700,6 @@ var FireHare;
                 this._cHttp.listen(5000, function () {
                     console.log("Listening on *:5000");
                 });
-                //new CollisionManager();
-                return;
                 this._cSocketServer.on('connection', this.onPlayerConnection.bind(this));
                 this._cGame.objectDestroyed.addHandler(this.onObjectDestroyed.bind(this));
                 this._cGame.objectSpawned.addHandler(this.onObjectSpawned.bind(this));
@@ -2784,164 +2769,4 @@ var cServer = new FireHare.Asteroids.Server();
 setInterval(function () {
     cServer.update();
 }, 10);
-/// <reference path="../game/game.ts" />
-// var C = SAT.Circle;
-// var V = SAT.Vector;
-// var circle1 = new C(new V(0, 0), 100);
-// var circle2 = new C(new V(0, 0), 100);
-// var result;
-// SAT.testCircleCircle(circle1, circle2, result);
-//console.log(result);
-var FireHare;
-/// <reference path="../game/game.ts" />
-// var C = SAT.Circle;
-// var V = SAT.Vector;
-// var circle1 = new C(new V(0, 0), 100);
-// var circle2 = new C(new V(0, 0), 100);
-// var result;
-// SAT.testCircleCircle(circle1, circle2, result);
-//console.log(result);
-(function (FireHare) {
-    var Asteroids;
-    (function (Asteroids) {
-        var Client = /** @class */ (function () {
-            function Client(cSocket) {
-                FireHare.Timer.Init();
-                this._cSocket = cSocket;
-                var cCanvas = document.getElementById("canvas");
-                var cContext = cCanvas.getContext("2d");
-                this._cCanvas = new FireHare.Canvas(cContext);
-                this._cSocket.on('disconnect', this.onServerDisconnected.bind(this));
-                this._cSocket.on(Asteroids.Messages.PlayerHandshake, this.onPlayerHandshake.bind(this));
-                this._cSocket.on(Asteroids.Messages.PlayerConnected, this.onPlayerConnected.bind(this));
-                this._cSocket.on(Asteroids.Messages.PlayerDisconnected, this.onPlayerDisconnect.bind(this));
-                this._cSocket.on(Asteroids.Messages.Synchronise, this.onSynchronise.bind(this));
-                this._cSocket.on(Asteroids.Messages.ObjectDestroyed, this.onObjectDestroyed.bind(this));
-                this._cSocket.on(Asteroids.Messages.ObjectSpawned, this.onObjectSpawned.bind(this));
-                this._cSocket.on(Asteroids.Messages.ObjectDamaged, this.onObjectDamaged.bind(this));
-                this._liPlayers = [];
-                this._cGame = new Asteroids.Game();
-                this.onRequestAnimationFrame();
-            }
-            ///
-            /// PRIVATE
-            ///
-            Client.prototype.getPlayer = function (gPlayer) {
-                for (var i = 0; i < this._liPlayers.length; i++) {
-                    if (this._liPlayers[i].identifier.equals(gPlayer))
-                        return this._liPlayers[i];
-                }
-            };
-            ///
-            /// EVENT HANDLERS
-            ///
-            Client.prototype.onServerDisconnected = function () {
-                window.location.href = window.location.href;
-            };
-            Client.prototype.onObjectDamaged = function (cArgs) {
-                this._cGame.damageObject(cArgs);
-            };
-            Client.prototype.onObjectSpawned = function (cArgs) {
-                this._cGame.spawnObject(cArgs);
-            };
-            Client.prototype.onObjectDestroyed = function (cArgs) {
-                this._cGame.destroyObject(cArgs);
-            };
-            Client.prototype.onSynchronise = function (cArgs) {
-                this._cGame.synchronise(cArgs);
-            };
-            Client.prototype.onPlayerHandshake = function (cArgs) {
-                var _this = this;
-                FireHare.Log.AddItem("Player handshake received");
-                var gId = new Guid(cArgs.shipIdentifier);
-                this._cPlayer = new Asteroids.LocalPlayer(gId, new Guid(cArgs.shipIdentifier), new Guid(cArgs.teamIdentifier));
-                this._cPlayer.accellerate.addHandler(function () {
-                    _this._cSocket.emit(Asteroids.Messages.PlayerAction, new Asteroids.Args.PlayerActionArgs(gId, Asteroids.PlayerAction.Accellerate));
-                });
-                this._cPlayer.decellerate.addHandler(function () {
-                    _this._cSocket.emit(Asteroids.Messages.PlayerAction, new Asteroids.Args.PlayerActionArgs(gId, Asteroids.PlayerAction.Decellerate));
-                });
-                this._cPlayer.turnToPort.addHandler(function () {
-                    _this._cSocket.emit(Asteroids.Messages.PlayerAction, new Asteroids.Args.PlayerActionArgs(gId, Asteroids.PlayerAction.TurnToPort));
-                });
-                this._cPlayer.turnToStarboard.addHandler(function () {
-                    _this._cSocket.emit(Asteroids.Messages.PlayerAction, new Asteroids.Args.PlayerActionArgs(gId, Asteroids.PlayerAction.TurnToStarboard));
-                });
-                this._cPlayer.selfDestruct.addHandler(function () {
-                    _this._cSocket.emit(Asteroids.Messages.PlayerAction, new Asteroids.Args.PlayerActionArgs(gId, Asteroids.PlayerAction.SelfDestruct));
-                });
-                this._cPlayer.fired.addHandler(function () {
-                    _this._cSocket.emit(Asteroids.Messages.PlayerAction, new Asteroids.Args.PlayerActionArgs(gId, Asteroids.PlayerAction.Fire));
-                });
-                this._cGame.addGameObject(this._cPlayer.ship);
-                for (var i = 0; i < cArgs.objects.length; i++) {
-                    var gId_1 = new Guid(cArgs.objects[i]);
-                    var cPosition = new FireHare.Vector(cArgs.positionX[i], cArgs.positionY[i]);
-                    switch (cArgs.objectTypes[i]) {
-                        case Asteroids.ObjectType.Ship:
-                            var cShip = new Asteroids.Havok();
-                            cShip.identifier = gId_1;
-                            cShip.position = cPosition;
-                            this._cGame.addGameObject(cShip);
-                            break;
-                        case Asteroids.ObjectType.Laser:
-                            var cLaser = new Asteroids.Laser();
-                            cLaser.identifier = gId_1;
-                            cLaser.position = cPosition;
-                            this._cGame.addGameObject(cLaser);
-                            break;
-                        case Asteroids.ObjectType.Scrap:
-                            var aData = cArgs.scrapData.splice(0, 1)[0];
-                            var gTeam = new Guid(aData['team']);
-                            var cScrap = new Asteroids.Scrap(gTeam, Asteroids.Components.Component.CreateComponent(aData['type'], aData['mirror'], aData['scale'], new FireHare.Vector(aData['xOffset'], aData['yOffset'])), FireHare.Vector.Zero);
-                            cScrap.identifier = gId_1;
-                            cScrap.position = cPosition;
-                            this._cGame.addGameObject(cScrap);
-                            break;
-                    }
-                }
-            };
-            Client.prototype.onPlayerConnected = function (cArgs) {
-                FireHare.Log.AddItem(String.format("Player connected ({0}).", cArgs.identifier));
-                var cPlayer = new Asteroids.Player(new Guid(cArgs.identifier), new Guid(cArgs.shipIdentifier), new Guid(cArgs.teamIdentifier));
-                this._liPlayers.push(cPlayer);
-                this._cGame.addGameObject(cPlayer.ship);
-            };
-            Client.prototype.onPlayerDisconnect = function (cArgs) {
-                var cPlayer = this.getPlayer(new Guid(cArgs.identifier));
-                if (!hasValue(cPlayer))
-                    return;
-                this._cGame.removeGameObject(cPlayer.ship.identifier);
-                FireHare.Log.AddItem("Player disconnected.");
-            };
-            Client.prototype.onRequestAnimationFrame = function () {
-                FireHare.Timer.TIMER().update();
-                FireHare.Log.LOG().update();
-                this._cCanvas.update();
-                // Clear the canvas back to black
-                this._cCanvas.clear();
-                if (FireHare.Input.IsKeyDown(107 /* NumpadPlus */)) {
-                    FireHare.Camera.ZoomIn();
-                }
-                if (FireHare.Input.IsKeyDown(109 /* NumpadMinus */)) {
-                    FireHare.Camera.ZoomOut();
-                }
-                if (hasValue(this._cPlayer)) {
-                    Asteroids.District.drawGrid(this._cCanvas, this._cPlayer.ship.position);
-                    this._cGame.update();
-                    this._cPlayer.update();
-                    //this._cCanvas.moveTo(this._cGame.gameObjects[0].position);
-                    //this._cCanvas.moveTo(this._cPlayer.ship.position);
-                    this._cPlayer.draw(this._cCanvas);
-                    this._cGame.draw(this._cCanvas);
-                }
-                // Draw the log on top of everything
-                FireHare.Log.LOG().draw(this._cCanvas);
-                FireHare.Input.Update();
-                window.requestAnimationFrame(this.onRequestAnimationFrame.bind(this));
-            };
-            return Client;
-        }());
-        Asteroids.Client = Client;
-    })(Asteroids = FireHare.Asteroids || (FireHare.Asteroids = {}));
-})(FireHare || (FireHare = {}));
+// Test

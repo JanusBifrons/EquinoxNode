@@ -28,8 +28,6 @@ namespace FireHare.Asteroids {
         private _cGame: Game;
 
         constructor() {
-            console.log(this._cSAT);
-
             Timer.Init();
 
             this._liPlayers = [];
@@ -46,10 +44,6 @@ namespace FireHare.Asteroids {
             this._cHttp.listen(5000, () => {
                 console.log("Listening on *:5000");
             });
-
-            //new CollisionManager();
-
-            return;
 
             this._cSocketServer.on('connection', this.onPlayerConnection.bind(this));
 
