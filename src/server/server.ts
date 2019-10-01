@@ -13,10 +13,10 @@
 /// <reference path="../game/objects/scrap.ts" />
 /// <reference path="../game/collisionManager.ts" />
 
+global["SAT"] = require('SAT');
+
 namespace FireHare.Asteroids {
     export class Server {
-
-        private _cSAT = require('SAT');
         private _cExpress = require('express');
         private _cApp = this._cExpress();
         private _cHttp = require('http').Server(this._cApp);
@@ -29,7 +29,6 @@ namespace FireHare.Asteroids {
 
         constructor() {
             Timer.Init();
-
             this._liPlayers = [];
             this._liSockets = [];
             this._cGame = new Game();
