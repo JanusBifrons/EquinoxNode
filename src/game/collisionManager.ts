@@ -13,6 +13,12 @@ namespace FireHare.Asteroids {
 
                 for(let j = 0; j < cOtherComponents.length; j++) {
                     let cOtherComponent: Components.Component = cOtherComponents[j];
+
+                    let cResponse: SAT.Response = new SAT.Response();
+
+                    if(SAT.testPolygonPolygon(cComponent.collisionPolygon, cOtherComponent.collisionPolygon, cResponse)){
+                        cObject.collision(Vector.FromSAT(cResponse.overlapV.reverse()));
+                    }
                 }
             }
         }

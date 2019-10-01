@@ -211,6 +211,16 @@ namespace FireHare.Asteroids.Components {
         /// PROPERTIES
         ///
 
+        get collisionPolygon(): SAT.Polygon {
+            let liOutline: SAT.Vector[] = [];
+
+            for(const cVector of this._liOutline) {
+                liOutline.push(cVector.toSAT());
+            }
+
+            return new SAT.Polygon(this.position.toSAT(), liOutline);
+        }
+
         get position(): Vector {
             return this._cPosition;
         }

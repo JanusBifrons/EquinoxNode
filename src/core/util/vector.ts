@@ -48,7 +48,7 @@ namespace FireHare {
             return Math.atan2(nY, nX);
         }
 
-        static FromSAT(cVector: any): Vector {
+        static FromSAT(cVector: SAT.Vector): Vector {
             return new Vector(cVector.x, cVector.y);
         }
 
@@ -87,6 +87,10 @@ namespace FireHare {
 
             if(this._nY <= -nLimit)
                 this._nY = -nLimit;
+        }
+
+        public toSAT(): SAT.Vector {
+            return new SAT.Vector(this._nX, this._nY);
         }
 
         ///
