@@ -64,7 +64,7 @@ namespace FireHare {
             return new Vector(this._nX - cVector.X, this._nY - cVector.Y);
         }
 
-        public multiply(nMultiple: number) {
+        public multiply(nMultiple: number): Vector {
             return new Vector(this._nX * nMultiple, this._nY * nMultiple);
         }
 
@@ -73,6 +73,10 @@ namespace FireHare {
                 return true;
 
             return false;
+        }
+
+        public reverse(): Vector {
+            return this.multiply(-1);
         }
 
         public limit(nLimit: number) {

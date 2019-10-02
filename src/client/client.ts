@@ -5,11 +5,12 @@ namespace FireHare.Asteroids {
 
         private _cCanvas: Canvas;
         private _cGame: Game;
+        private _cUI: UI;
         private _cSocket: SocketIO.Socket;
         private _cPlayer: LocalPlayer;
         private _liPlayers: Player[];
 
-        constructor(cSocket: SocketIO.Socket, cSAT: any) {
+        constructor(cSocket: SocketIO.Socket) {
             Timer.Init();
 
             this._cSocket = cSocket;
@@ -32,6 +33,8 @@ namespace FireHare.Asteroids {
             this._liPlayers = [];
 
             this._cGame = new Game();
+
+            this._cUI = new UI();
 
             this.onRequestAnimationFrame();
         }
@@ -186,13 +189,11 @@ namespace FireHare.Asteroids {
                 this._cGame.update();
                 this._cPlayer.update();
 
-                //this._cCanvas.moveTo(this._cGame.gameObjects[0].position);
-                //this._cCanvas.moveTo(this._cPlayer.ship.position);
-
                 this._cPlayer.draw(this._cCanvas);
 
                 this._cGame.draw(this._cCanvas);
-                
+
+                this._cUI.drawStatistics(this._cCanvas, this._cPlayer.ship.stats);
             }
             
             // Draw the log on top of everything

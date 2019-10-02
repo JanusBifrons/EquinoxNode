@@ -162,14 +162,13 @@ namespace FireHare.Asteroids {
         }
 
         protected onApplyForce(cForce: Vector) {
-            this._cVelocity.X += cForce.X;
-            this._cVelocity.Y += cForce.Y;
+            this._cVelocity = this._cVelocity.add(cForce);
         }
 
         protected onCollision(cForce: Vector) {
-            //this._cPosition.subtract(cForce);
+            this._cPosition = this._cPosition.add(cForce);
 
-            this.applyForce(cForce.multiply(0.1));
+            this.applyForce(cForce.multiply(0.05));
         }
 
         protected onDestroy() {

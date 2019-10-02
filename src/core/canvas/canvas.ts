@@ -82,6 +82,23 @@ namespace FireHare {
             Camera.CAMERA().moveTo(cPosition);
         }
 
+        public drawArc(cPosition: Vector, nRadius: number, nWidth: number, nStart: number, nEnd: number, cColour: Colour = Canvas.DEFAULT_COLOUR) {
+            this._cContext.strokeStyle = cColour.toString();
+
+            // Change line width
+            let nLineWidth = this._cContext.lineWidth;
+
+            this._cContext.lineWidth = nWidth;
+
+            this._cContext.beginPath();
+            this._cContext.arc(cPosition.X, cPosition.Y, nRadius, nStart, nEnd);
+            this._cContext.stroke();
+            this._cContext.closePath();
+
+            // Reset line width
+            this._cContext.lineWidth = nLineWidth;
+        }
+
         public drawCircle(cPosition: Vector, nRadius: number, cColour: Colour = Canvas.DEFAULT_COLOUR) {
             this._cContext.strokeStyle = cColour.toString();
 
@@ -127,6 +144,14 @@ namespace FireHare {
 
         get context(): CanvasRenderingContext2D {
             return this._cContext;
+        }
+
+        get canvasWidth(): number {
+            return this._cContext.canvas.width;
+        }
+
+        get canvasHeight(): number {
+            return this._cContext.canvas.height;
         }
     }
 }

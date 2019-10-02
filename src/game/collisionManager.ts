@@ -17,10 +17,35 @@ namespace FireHare.Asteroids {
                     let cResponse: SAT.Response = new SAT.Response();
 
                     if(SAT.testPolygonPolygon(cComponent.collisionPolygon, cOtherComponent.collisionPolygon, cResponse)){
-                        cObject.collision(Vector.FromSAT(cResponse.overlapV.reverse()));
+                        let cForce: Vector = Vector.FromSAT(cResponse.overlapV);
+
+                        cObject.collision(cForce.reverse());
+                        cOtherObject.collision(cForce);
+
+                        // Object collision handled, return
+                        return;
                     }
                 }
             }
+        }
+
+        ///
+        /// PRIVATE
+        ///
+
+        /** Simple method which will test the object radius distances to determine if objects are in range to collide
+         * and justify using SAT collision detection which is more expensive.
+         */
+        private sanityCollisionCheck(cObject: GameObject, cOtherObject: GameObject): boolean {
+            let nRadii: number = cObject.radius + cOtherObject.radius;
+            let nDistance: number = Vector.Distance(cObject.position, cOtherObject.position);
+            let nDifference: number = nDistance - nRadii;
+
+            if(nDifference < 0) {
+                return true;
+            }
+
+            return false;
         }
     }
 }

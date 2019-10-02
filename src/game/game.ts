@@ -66,45 +66,21 @@ namespace FireHare.Asteroids {
 
                 if(cObject.team.equals(cOtherObject.team))
                     return;    
-
+                
                 this._cCollisionManager.collisionCheck(cObject, cOtherObject);
 
-                return;
-                
-                let nRadii: number = cObject.radius + cOtherObject.radius;
-                let nDistance: number = Vector.Distance(cObject.position, cOtherObject.position);
-                let nDifference: number = nDistance - nRadii;
+                let eType: ObjectType = GameObject.GetType(cObject);
+                let eOtherType: ObjectType = GameObject.GetType(cOtherObject);
 
-                if(nDifference < 0) {
-                    let cCollisionVector: Vector = new Vector(cObject.position.X - cOtherObject.position.X, cObject.position.Y - cOtherObject.position.Y);
+                if(eType == ObjectType.Laser || eOtherType == ObjectType.Laser){
+                    cObject.applyDamage(10);
+                    cOtherObject.applyDamage(10);
 
-                    if(cCollisionVector.X == 0)
-                        cCollisionVector.X = 0.00001;
+                    if(eType != ObjectType.Laser)
+                        this.objectDamaged.raise(this, new Args.ObjectDamagedArgs(cObject.identifier, 10));
 
-                    if(cCollisionVector.Y == 0)
-                        cCollisionVector.Y = 0.00001;
-
-                    let eType: ObjectType = GameObject.GetType(cObject);
-                    let eOtherType: ObjectType = GameObject.GetType(cOtherObject);
-
-                    if(eType == ObjectType.Laser || eOtherType == ObjectType.Laser){
-                        cObject.applyDamage(10);
-                        cOtherObject.applyDamage(10);
-
-                        if(eType != ObjectType.Laser)
-                            this.objectDamaged.raise(this, new Args.ObjectDamagedArgs(cObject.identifier, 10));
-
-                        if(eOtherType != ObjectType.Laser)
-                            this.objectDamaged.raise(this, new Args.ObjectDamagedArgs(cOtherObject.identifier, 10));
-                    }
-                    else {
-                        // PERFORM SAT COLLISION DETECTION!
-
-                        this._cCollisionManager.collisionCheck(cObject, cOtherObject);
-
-                        //cObject.collision(Vector.Unit(cCollisionVector));
-                        //cOtherObject.collision(Vector.Unit(cCollisionVector.multiply(-1)));
-                    }
+                    if(eOtherType != ObjectType.Laser)
+                        this.objectDamaged.raise(this, new Args.ObjectDamagedArgs(cOtherObject.identifier, 10));
                 }
             }
         }
@@ -112,6 +88,14 @@ namespace FireHare.Asteroids {
         ///
         /// PUBLIC
         ///
+
+        public generateScrap() {
+            let cShip: Havok = new Havok(Guid.NewGuid());
+
+            this.addGameObject(cShip);
+
+            cShip.destroy();
+        }
 
         public applyAction(cArgs: Args.PlayerActionArgs) {
             let cShip: Ship = this.getGameObject(new Guid(cArgs.identifier)) as Ship;
@@ -277,12 +261,12 @@ namespace FireHare.Asteroids {
             for(let i = 0; i < this._liGameObjects.length; i++){
                 let cObjectA: GameObject = this._liGameObjects[i];
 
-                //liObjects.remove(cObjectA);
-
                 if(!cObjectA.isAlive)
                     continue;                
 
                 this.checkForCollisions(cObjectA, liObjects);
+
+                // TODO: Can probably remove cObjectA from the liObjects array here (T16)
             }
         }
 

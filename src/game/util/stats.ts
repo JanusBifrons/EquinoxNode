@@ -33,12 +33,12 @@ namespace FireHare.Asteroids {
             // Set shields
             this._nShieldRegenerationCap = 1000; // 1s
             this._nShieldRegen = 0;
-            //this._nShieldCap = 100;
+            this._nShieldCap = 100;
             this._nShieldCap = 0;
             this._nShields = this._nShieldCap;
             
             // Set armour
-            //this._nArmourCap = 100;
+            this._nArmourCap = 100;
             this._nArmourCap = 0;
             this._nArmour = this._nArmourCap;
             this._nArmourRegen = 1000;
@@ -54,7 +54,7 @@ namespace FireHare.Asteroids {
         ///
 
         public update() {
-            //this.regenStats();
+            this.regenStats();
         }
 
         public applyDamage(nTotalDamage: number): boolean {
@@ -176,6 +176,27 @@ namespace FireHare.Asteroids {
         ///
         /// PROPERTIES
         ///
+
+        get shieldPercent(): number {
+            if(this._nShields === 0)
+                return 0;
+
+            return (this._nShields / this._nShieldCap) * 100;
+        }
+
+        get armourPercent(): number {
+            if(this._nArmour === 0)
+                return 0;
+
+            return (this._nArmour / this._nArmourCap) * 100;
+        }
+
+        get hullPercent(): number {
+            if(this._nHull === 0)
+                return 0;
+
+            return (this._nHull / this._nHullCap) * 100;
+        }
 
         get accelleration(): number {
             return this._nAccelleration;
