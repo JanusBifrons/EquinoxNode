@@ -1,7 +1,7 @@
 
 /// <reference path="server/Server.ts" />
 
-let cServer: FireHare.Asteroids.Server = new FireHare.Asteroids.Server();
+let cServer: FireHare.Equinox.Server = new FireHare.Equinox.Server();
 
 setInterval(() => {
     cServer.update();

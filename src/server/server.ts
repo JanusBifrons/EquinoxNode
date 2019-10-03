@@ -15,7 +15,7 @@
 
 global["SAT"] = require('SAT');
 
-namespace FireHare.Asteroids {
+namespace FireHare.Equinox {
     export class Server {
         private _cExpress = require('express');
         private _cApp = this._cExpress();
