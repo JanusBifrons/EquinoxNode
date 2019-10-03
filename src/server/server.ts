@@ -50,7 +50,8 @@ namespace FireHare.Asteroids {
             this._cGame.objectSpawned.addHandler(this.onObjectSpawned.bind(this));
             this._cGame.objectDamaged.addHandler(this.onObjectDamaged.bind(this));
 
-            this._cGame.generateScrap();
+            //this._cGame.generateScrap();
+            this._cGame.generateAsteroids();
         }
 
         ///

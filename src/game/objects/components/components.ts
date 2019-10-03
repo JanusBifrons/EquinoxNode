@@ -4,6 +4,7 @@ namespace FireHare.Asteroids.Components {
         Wing, 
         RearWing,
         Pad,
+        Asteroid,
         Unknown
     }
 }

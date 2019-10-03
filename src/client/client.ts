@@ -129,16 +129,30 @@ namespace FireHare.Asteroids {
                         break;
 
                     case ObjectType.Scrap:
-                        let aData: any = cArgs.scrapData.splice(0, 1)[0];
+                        let aScrapData: any = cArgs.scrapData.splice(0, 1)[0];
 
-                        let gTeam: Guid = new Guid(aData['team']);
+                        let gTeam: Guid = new Guid(aScrapData['team']);
 
-                        let cScrap: Scrap = new Scrap(gTeam, Components.Component.CreateComponent(aData['type'], aData['mirror'], aData['scale'], new Vector(aData['xOffset'], aData['yOffset'])), Vector.Zero);
+                        let cScrap: Scrap = new Scrap(gTeam, Components.Component.CreateComponent(aScrapData['type'], aScrapData['mirror'], aScrapData['scale'], new Vector(aScrapData['xOffset'], aScrapData['yOffset'])), Vector.Zero);
                         cScrap.identifier = gId;
                         cScrap.position = cPosition;
 
                         this._cGame.addGameObject(cScrap);
 
+                        break;
+
+                    case ObjectType.Asteroid:
+                        let aAsteroidData: any = cArgs.asteroidData.splice(0, 1)[0];
+
+                        let cAsteroid: Asteroid = new Asteroid(aAsteroidData['radius']);
+                        cAsteroid.identifier = gId;
+                        cAsteroid.position = cPosition;
+
+                        this._cGame.addGameObject(cAsteroid);
+                        break;
+
+                    default:
+                        console.log("Unidentified object!");
                         break;
                 }
             }

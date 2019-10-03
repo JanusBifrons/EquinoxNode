@@ -11,6 +11,7 @@ namespace FireHare.Asteroids.Components {
         private _nScale: number;
         private _bMirror: boolean;
         
+        
 
         ///
         /// PROTECTED
@@ -19,6 +20,7 @@ namespace FireHare.Asteroids.Components {
         protected _liOutline: Vector[];
         protected _cPrimaryColour: Colour;
         protected _cSecondaryColour: Colour;
+        protected _bUpdateCenter: boolean;
 
         constructor(cOffset: Vector, bMirror: boolean = false, nScale: number = 1) {
             this._eType = Components.Unknown;
@@ -34,6 +36,8 @@ namespace FireHare.Asteroids.Components {
             this._nRotation = 0;
             this._nScale = nScale;
             this._bMirror = bMirror;
+
+            this._bUpdateCenter = true;
 
             this.setType();
         }
@@ -163,7 +167,10 @@ namespace FireHare.Asteroids.Components {
 
             this.scaleOutline();
 
-            this.updateCenter();
+            if(this._bUpdateCenter) {
+                this.updateCenter();
+            }
+            
             this.centerOutline();
         }
 

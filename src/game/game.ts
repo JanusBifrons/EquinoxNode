@@ -89,6 +89,10 @@ namespace FireHare.Asteroids {
         /// PUBLIC
         ///
 
+        public generateAsteroids(nSize: number = 1) {
+            this.addGameObjects(Asteroid.GenerateAsteroidField(nSize));
+        }
+
         public generateScrap() {
             let cShip: Havok = new Havok(Guid.NewGuid());
 
@@ -217,6 +221,10 @@ namespace FireHare.Asteroids {
 
                     cObject = Laser.FromShip(cShip);
                     cObject.identifier = new Guid(cArgs.objectId);
+                    break;
+
+                    case ObjectType.Asteroid:
+                    
                     break;
             }
 

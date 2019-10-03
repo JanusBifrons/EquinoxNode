@@ -5,6 +5,6 @@ let cServer: FireHare.Asteroids.Server = new FireHare.Asteroids.Server();
 
 setInterval(() => {
     cServer.update();
-}, 10);
+}, 1);
 
 // Test

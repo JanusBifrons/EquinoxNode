@@ -117,6 +117,7 @@ namespace FireHare.Asteroids.Args {
         public scrapData: any[];
         public positionX: number[];
         public positionY: number[];
+        public asteroidData: any[];
 
         constructor(gId: Guid, gShipId: Guid, gTeam: Guid, liGameObjects: GameObject[]) {
             this.identifier = gId.toString();
@@ -126,6 +127,7 @@ namespace FireHare.Asteroids.Args {
             this.objects = [];
             this.objectTypes = [];
             this.scrapData = [];
+            this.asteroidData = [];
             this.positionX = [];
             this.positionY = [];
 
@@ -133,14 +135,10 @@ namespace FireHare.Asteroids.Args {
                 this.objects.push(liGameObjects[i].identifier.toString());
 
                 let aObject: any = liGameObjects[i];
-                let eType: ObjectType = ObjectType.Unknown;
+                let eType: ObjectType = GameObject.GetType(aObject);
 
-                if(aObject instanceof Ship)
-                    eType = ObjectType.Ship;
-
+                // Scrap is special and needs more information
                 if(aObject instanceof Scrap){
-                    eType = ObjectType.Scrap;
-
                     let cComponent: Components.Component = aObject.components[0];
 
                     this.scrapData.push({
@@ -152,10 +150,14 @@ namespace FireHare.Asteroids.Args {
                         yOffset: cComponent.offset.Y
                     });
                 }
-                    
 
-                if(aObject instanceof Laser)
-                    eType = ObjectType.Laser;
+                if(aObject instanceof Asteroid) {
+                    let cAsteroid: Asteroid = aObject;
+
+                    this.asteroidData.push({
+                        radius: cAsteroid.radius
+                    });
+                }
 
                 this.objectTypes.push(eType);
                 this.positionX.push(liGameObjects[i].position.X);

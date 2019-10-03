@@ -3,6 +3,7 @@ namespace FireHare.Asteroids {
         Ship,
         Laser,
         Scrap,
+        Asteroid,
         Unknown
     }
 
@@ -38,7 +39,6 @@ namespace FireHare.Asteroids {
         constructor(gTeam: Guid = Guid.NewGuid()) {
             this._gId = Guid.NewGuid();
             this._gTeam = gTeam;
-            //this._cPosition = Vector.Zero;
             this._cPosition = District.RandomSpawn();
             this._cVelocity = new Vector(0, 0);
             this._nRotation = 0;
@@ -146,6 +146,9 @@ namespace FireHare.Asteroids {
             if(cObject instanceof Scrap)
                 return ObjectType.Scrap;
 
+            if(cObject instanceof Asteroid)
+                return ObjectType.Asteroid;
+
             return ObjectType.Unknown;
         }
 
@@ -168,7 +171,7 @@ namespace FireHare.Asteroids {
         protected onCollision(cForce: Vector) {
             this._cPosition = this._cPosition.add(cForce);
 
-            this.applyForce(cForce.multiply(0.05));
+            //this.applyForce(cForce.multiply(0.05));
         }
 
         protected onDestroy() {
