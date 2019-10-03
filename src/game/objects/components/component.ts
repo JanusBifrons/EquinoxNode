@@ -1,4 +1,4 @@
-namespace FireHare.Asteroids.Components {
+namespace FireHare.Equinox.Components {
     export abstract class Component {
 
         ///

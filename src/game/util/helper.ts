@@ -1,4 +1,4 @@
-namespace FireHare.Asteroids {
+namespace FireHare.Equinox {
     export class Helper {
         static WrapRotation(nRotation: number): number {
             while(nRotation < -Math.PI)

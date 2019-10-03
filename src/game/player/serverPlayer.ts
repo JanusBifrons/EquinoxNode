@@ -1,6 +1,6 @@
 /// <reference path="player.ts" />
 
-namespace FireHare.Asteroids {
+namespace FireHare.Equinox {
     export class ServerPlayer extends Player {
 
         ///

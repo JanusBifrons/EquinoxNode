@@ -1,4 +1,4 @@
-namespace FireHare.Asteroids {
+namespace FireHare.Equinox {
     export class Messages {
         /// MISC
         static PlayerConnected: string = "PlayerConnected";

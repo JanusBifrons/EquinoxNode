@@ -1,6 +1,6 @@
 /// <reference path="ship.ts" />
 
-namespace FireHare.Asteroids {
+namespace FireHare.Equinox {
     export class Havok extends Ship {
         constructor(gTeam?: Guid) {
             super(gTeam);

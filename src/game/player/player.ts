@@ -1,5 +1,5 @@
 
-namespace FireHare.Asteroids {
+namespace FireHare.Equinox {
     export class Player {
 
         ///

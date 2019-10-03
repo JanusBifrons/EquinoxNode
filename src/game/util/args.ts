@@ -1,4 +1,4 @@
-namespace FireHare.Asteroids.Args {
+namespace FireHare.Equinox.Args {
 
     export class PlayerActionArgs {
 

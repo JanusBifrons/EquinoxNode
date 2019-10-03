@@ -1,10 +1,14 @@
-namespace FireHare.Asteroids {
+namespace FireHare.Equinox {
     export class CollisionManager {
 
         constructor() {            
         }
 
         public collisionCheck(cObject: GameObject, cOtherObject: GameObject) {
+            if(!this.sanityCollisionCheck(cObject, cOtherObject)) {
+                return;
+            }
+
             let cComponents: Components.Component[] = cObject.components;
             let cOtherComponents: Components.Component[] = cOtherObject.components;
 

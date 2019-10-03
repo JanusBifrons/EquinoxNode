@@ -1,4 +1,4 @@
-namespace FireHare.Asteroids {
+namespace FireHare.Equinox {
     export class District {
         static DISTRICT_MIN: Vector = new Vector(0, 0);
         static DISTRICT_MAX: Vector = new Vector(500, 500);

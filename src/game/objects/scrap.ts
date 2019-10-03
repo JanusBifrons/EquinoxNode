@@ -1,6 +1,6 @@
 /// <reference path="gameObject.ts" />
 
-namespace FireHare.Asteroids { 
+namespace FireHare.Equinox { 
     export class Scrap extends GameObject {
         constructor(gTeam: Guid, cComponent: Components.Component, cVelocity: Vector) {
             super();
@@ -10,7 +10,7 @@ namespace FireHare.Asteroids {
             this.position = new Vector(cComponent.position.X, cComponent.position.Y);
             this.rotation = cComponent.rotation;
 
-            this._nRadius = 5;
+            this._nRadius = 50;
 
             cComponent.offset = Vector.Zero;
 

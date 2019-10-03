@@ -1,4 +1,4 @@
-namespace FireHare.Asteroids {
+namespace FireHare.Equinox {
     export class Laser extends GameObject {
         constructor() {
             super();

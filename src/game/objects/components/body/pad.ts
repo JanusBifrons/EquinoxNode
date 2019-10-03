@@ -1,4 +1,4 @@
-namespace FireHare.Asteroids.Components {
+namespace FireHare.Equinox.Components {
     export class Pad extends Component {
 
         public setType() {

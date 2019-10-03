@@ -1,4 +1,4 @@
-namespace FireHare.Asteroids {
+namespace FireHare.Equinox {
     export enum ObjectType {
         Ship,
         Laser,

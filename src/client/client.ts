@@ -1,6 +1,6 @@
 /// <reference path="../game/game.ts" />
 
-namespace FireHare.Asteroids {
+namespace FireHare.Equinox {
     export class Client {
 
         private _cCanvas: Canvas;
