@@ -56,14 +56,10 @@ namespace FireHare.Equinox {
         ///
 
         private onServerDisconnected() {
-            // let cCanvas: HTMLCanvasElement = document.getElementById("canvas") as HTMLCanvasElement;
-            // cCanvas.style.display = "none";
+            // Remove all game objects and reset the game world
+            this._cGame.reset();
 
-            // const error = document.createElement("p");
-            // error.textContent = "Server Disconnected";
-
-            // document.body.appendChild(error);
-
+            // No longer connected, display appropriate UI
             this._bIsConnected = false;
         }
 
@@ -85,6 +81,9 @@ namespace FireHare.Equinox {
 
         private onPlayerHandshake(cArgs: Args.PlayerHandshakeArgs) {
             Log.AddItem("Player handshake received");
+
+            // Connected/reconnected
+            this._bIsConnected = true;
 
             let gId: Guid = new Guid(cArgs.shipIdentifier);
 
