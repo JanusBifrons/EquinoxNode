@@ -3,12 +3,12 @@ namespace FireHare.Asteroids {
 
 
 
-        constructor(nRadius: number) {
+        constructor(nRadius: number, liOutline: Vector[] = []) {
             super(Guid.NewGuid());
 
             this._nRadius = nRadius;
 
-            this._liComponents.push(new Components.Asteroid(this._nRadius));
+            this._liComponents.push(new Components.Asteroid(this._nRadius, liOutline));
         }
 
         ///
@@ -17,6 +17,14 @@ namespace FireHare.Asteroids {
 
         protected onCollision() {
             return;
+        }
+
+        ///
+        /// PROPERTIES
+        ///
+
+        get outline(): Vector[] {
+            return this._liComponents[0].outline; // TODO: Refactor this (T26)
         }
 
         ///

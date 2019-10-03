@@ -174,12 +174,12 @@ namespace FireHare.Asteroids.Components {
             this.centerOutline();
         }
 
-        public draw(cCanvas: Canvas) {
+        public draw(cCanvas: Canvas, cColour: Colour = Colour.White) {
             cCanvas.changeContext(this._cPosition, this._nRotation);
 
             cCanvas.setStrokeColour(Colour.Black);
 
-            cCanvas.drawPath(this._liOutline, true, Colour.White);
+            cCanvas.drawPath(this._liOutline, true, cColour);
 
             cCanvas.restoreContext();
 
@@ -254,6 +254,10 @@ namespace FireHare.Asteroids.Components {
 
         get type(): Components {
             return this._eType;
+        }
+
+        get outline(): Vector[] {
+            return this._liOutline;
         }
     }
 }

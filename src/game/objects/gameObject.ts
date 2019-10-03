@@ -107,7 +107,7 @@ namespace FireHare.Asteroids {
             }
 
             
-            cCanvas.drawCircle(this.position, this.radius, Colour.Red);
+            //cCanvas.drawCircle(this.position, this.radius, Colour.Red);
         }
 
         public applyForce(cForce: Vector) {

@@ -155,7 +155,8 @@ namespace FireHare.Asteroids.Args {
                     let cAsteroid: Asteroid = aObject;
 
                     this.asteroidData.push({
-                        radius: cAsteroid.radius
+                        radius: cAsteroid.radius,
+                        outline: JSON.stringify(cAsteroid.outline)
                     });
                 }
 

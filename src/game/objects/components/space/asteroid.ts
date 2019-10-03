@@ -1,45 +1,56 @@
 namespace FireHare.Asteroids.Components {
     export class Asteroid extends Component {
 
-        private _liAsteroidPoints: Vector[];
+        private _liAsteroidVectors: Vector[];
         private _nRadius: number;
 
-        constructor(nRadius: number) {
+        constructor(nRadius: number, liOutline: Vector[] = []) {
             super(Vector.Zero);
 
             this._nRadius = nRadius;
 
-            this._liAsteroidPoints = [];
+            this._liAsteroidVectors = [];
             this._bUpdateCenter = false;
 
-            this.generatePoints();
+            if(liOutline.isEmpty()) {
+                this.generateVectors();
+            }
+            else {
+                this._liOutline = liOutline;
+            }
         }
 
         ///
         /// PRIVATE
         ///
 
-        private generatePoints() {
+        private generateVectors() {
+            let liVerts: number[] = this.generateVerts();
+
+            for(var i = 0; i < liVerts.length; i++)
+            {
+                var nX = ((this._nRadius * 0.75) * Math.cos(liVerts[i]));
+                var nY = ((this._nRadius * 0.75) * Math.sin(liVerts[i]));
+                
+                this._liOutline.push(new Vector(nX, nY));
+            }
+        }
+
+        private generateVerts(): number[] {
+            let liVerts: number[] = [];
             const nNumberOfVerts: number = (Math.random() * 6) + 10;
-            const liPoints: number[] = [];
         
             for(var i = 0; i < nNumberOfVerts; i++)
             {
-                liPoints.push(Math.random() * (Math.PI * 2));
+                liVerts.push(Math.random() * (Math.PI * 2));
             }
             
             // Sort from lowest to highest
-            liPoints.sort((a, b) => {
+            liVerts.sort((a, b) => {
                 return a - b;
             });
-            
-            for(var i = 0; i < liPoints.length; i++)
-            {
-                var nX = ((this._nRadius * 0.75) * Math.cos(liPoints[i]));
-                var nY = ((this._nRadius * 0.75) * Math.sin(liPoints[i]));
-                
-                this._liAsteroidPoints.push(new Vector(nX, nY));
-            }
+
+            return liVerts;
         }
 
         ///
@@ -50,17 +61,18 @@ namespace FireHare.Asteroids.Components {
             this._eType = Components.Asteroid;
         }
 
+        public draw(cCanvas: Canvas) {
+            super.draw(cCanvas, Colour.Grey);
+        }
+
         ///
         /// PROTECTED
         ///
 
         protected createOutline() {
-            this._liOutline = [];
-            
-            for(var i = 0; i < this._liAsteroidPoints.length; i++)
-            {
-                this._liOutline.push(this._liAsteroidPoints[i]);
-            }
+            // EMPTY
+
+            // Outline never changes for asteroid!
         }
 
         protected afterDraw(cCanvas: Canvas) {

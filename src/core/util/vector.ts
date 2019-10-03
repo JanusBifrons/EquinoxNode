@@ -1,15 +1,7 @@
 namespace FireHare {
     export class Vector {
 
-        ///
-        /// LOCAL
-        ///
-        private _nX: number;
-        private _nY: number;
-
-        constructor(nX: number, nY: number) {
-            this._nX = nX;
-            this._nY = nY;
+        constructor(public X: number, public Y: number) {
         }
 
         ///
@@ -57,15 +49,15 @@ namespace FireHare {
         ///
 
         public add(cVector: Vector): Vector {
-            return new Vector(this._nX + cVector.X, this._nY + cVector.Y);
+            return new Vector(this.X + cVector.X, this.Y + cVector.Y);
         }
 
         public subtract(cVector: Vector): Vector {
-            return new Vector(this._nX - cVector.X, this._nY - cVector.Y);
+            return new Vector(this.X - cVector.X, this.Y - cVector.Y);
         }
 
         public multiply(nMultiple: number): Vector {
-            return new Vector(this._nX * nMultiple, this._nY * nMultiple);
+            return new Vector(this.X * nMultiple, this.Y * nMultiple);
         }
 
         public equals(cVector: Vector): boolean {
@@ -80,49 +72,33 @@ namespace FireHare {
         }
 
         public limit(nLimit: number) {
-            if(this._nX >= nLimit)
-                this._nX = nLimit;
+            if(this.X >= nLimit)
+                this.X = nLimit;
 
-            if(this._nX <= -nLimit)
-                this._nX = -nLimit;
+            if(this.X <= -nLimit)
+                this.X = -nLimit;
 
-            if(this._nY >= nLimit)
-                this._nY = nLimit;
+            if(this.Y >= nLimit)
+                this.Y = nLimit;
 
-            if(this._nY <= -nLimit)
-                this._nY = -nLimit;
+            if(this.Y <= -nLimit)
+                this.Y = -nLimit;
         }
 
         public toSAT(): SAT.Vector {
-            return new SAT.Vector(this._nX, this._nY);
+            return new SAT.Vector(this.X, this.Y);
         }
 
         ///
         /// PROPERTIES
         ///
 
-        get X(): number {
-            return this._nX;
-        }
-
-        set X(nX: number) {
-            this._nX = nX;
-        }
-
-        get Y(): number { 
-            return this._nY;
-        }
-
-        set Y(nY: number) {
-            this._nY = nY;
-        }
-
         get magnitude(): number {
             return Math.sqrt(this.X * this.X + this.Y * this.Y);
         }
 
         get length(): number {
-            return Math.atan2(this._nY, this._nX);
+            return Math.atan2(this.Y, this.X);
         }
     }
 }

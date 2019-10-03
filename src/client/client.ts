@@ -55,7 +55,15 @@ namespace FireHare.Asteroids {
         ///
 
         private onServerDisconnected() {
-            window.location.href = window.location.href;
+            //window.location.href = window.location.href;
+
+            let cCanvas: HTMLCanvasElement = document.getElementById("canvas") as HTMLCanvasElement;
+            cCanvas.style.display = "none";
+
+            const error = document.createElement("p");
+            error.textContent = "Server Disconnected";
+
+            document.body.appendChild(error);
         }
 
         private onObjectDamaged(cArgs: Args.ObjectDamagedArgs) {
@@ -144,7 +152,18 @@ namespace FireHare.Asteroids {
                     case ObjectType.Asteroid:
                         let aAsteroidData: any = cArgs.asteroidData.splice(0, 1)[0];
 
-                        let cAsteroid: Asteroid = new Asteroid(aAsteroidData['radius']);
+
+
+                        let liOutlineShallow: Vector[] = JSON.parse(aAsteroidData['outline']);
+
+                        let liOutline: Vector[] = [];
+
+                        // Reinstantiate the vectors so they're not 'fake' vectors
+                        for(const cVector of liOutlineShallow) {
+                            liOutline.push(new Vector(cVector.X, cVector.Y));
+                        }
+
+                        let cAsteroid: Asteroid = new Asteroid(aAsteroidData['radius'], liOutline);
                         cAsteroid.identifier = gId;
                         cAsteroid.position = cPosition;
 
