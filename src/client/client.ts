@@ -5,13 +5,16 @@ namespace FireHare.Equinox {
 
         private _cCanvas: Canvas;
         private _cGame: Game;
-        private _cUI: UI;
         private _cSocket: SocketIO.Socket;
         private _cPlayer: LocalPlayer;
         private _liPlayers: Player[];
 
+        private _bIsConnected: boolean;
+
         constructor(cSocket: SocketIO.Socket) {
             Timer.Init();
+
+            this._bIsConnected = true;
 
             this._cSocket = cSocket;
 
@@ -34,8 +37,6 @@ namespace FireHare.Equinox {
 
             this._cGame = new Game();
 
-            this._cUI = new UI();
-
             this.onRequestAnimationFrame();
         }
 
@@ -55,15 +56,15 @@ namespace FireHare.Equinox {
         ///
 
         private onServerDisconnected() {
-            //window.location.href = window.location.href;
+            // let cCanvas: HTMLCanvasElement = document.getElementById("canvas") as HTMLCanvasElement;
+            // cCanvas.style.display = "none";
 
-            let cCanvas: HTMLCanvasElement = document.getElementById("canvas") as HTMLCanvasElement;
-            cCanvas.style.display = "none";
+            // const error = document.createElement("p");
+            // error.textContent = "Server Disconnected";
 
-            const error = document.createElement("p");
-            error.textContent = "Server Disconnected";
+            // document.body.appendChild(error);
 
-            document.body.appendChild(error);
+            this._bIsConnected = false;
         }
 
         private onObjectDamaged(cArgs: Args.ObjectDamagedArgs) {
@@ -198,6 +199,21 @@ namespace FireHare.Equinox {
             Log.AddItem("Player disconnected.");
         }
 
+        private gameLoop() {
+            if(hasValue(this._cPlayer)){
+                District.drawGrid(this._cCanvas, this._cPlayer.ship.position);
+                
+                this._cGame.update();
+                this._cPlayer.update();
+
+                this._cPlayer.draw(this._cCanvas);
+
+                this._cGame.draw(this._cCanvas);
+
+                UI.DrawStatistics(this._cCanvas, this._cPlayer.ship.stats);
+            }
+        }
+
         private onRequestAnimationFrame() {
             Timer.TIMER().update();
 
@@ -216,17 +232,12 @@ namespace FireHare.Equinox {
                 Camera.ZoomOut();
             }            
 
-            if(hasValue(this._cPlayer)){
-                District.drawGrid(this._cCanvas, this._cPlayer.ship.position);
-                
-                this._cGame.update();
-                this._cPlayer.update();
-
-                this._cPlayer.draw(this._cCanvas);
-
-                this._cGame.draw(this._cCanvas);
-
-                this._cUI.drawStatistics(this._cCanvas, this._cPlayer.ship.stats);
+            // Run the game loop
+            if(this._bIsConnected) {
+                this.gameLoop();
+            }
+            else{
+                UI.DrawServerDisconnect(this._cCanvas);
             }
             
             // Draw the log on top of everything

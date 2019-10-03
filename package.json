@@ -16,7 +16,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "npm run copy-index && node ./dist/server/abr.js",
+    "start": "npm run copy-index && node ./dist/server/eqnx.js",
     "copy-index": "copyfiles ./src/client/index.html ./dist/client/ --flat"
   },
   "author": "Alec Vickers",

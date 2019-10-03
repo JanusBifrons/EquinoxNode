@@ -42,10 +42,10 @@ namespace FireHare {
 
         /**
          * Clears the canvas back to the optional colour specified
-         * @param sColour The colour you wish the canvas to clear to (default: black)
+         * @param cColour The colour you wish the canvas to clear to (default: black)
          */
-        public clear() {
-            this._cContext.fillStyle = Colour.Black.toString();
+        public clear(cColour: Colour = Colour.Black) {
+            this._cContext.fillStyle = cColour.toString();
             this._cContext.fillRect(0, 0, this._cContext.canvas.width, this._cContext.canvas.height);
         }
 
@@ -152,6 +152,10 @@ namespace FireHare {
 
         get canvasHeight(): number {
             return this._cContext.canvas.height;
+        }
+
+        get screenCenter(): Vector {
+            return new Vector(this.canvasWidth / 2, this.canvasHeight / 2);
         }
     }
 }
