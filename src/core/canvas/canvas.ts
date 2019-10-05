@@ -120,7 +120,6 @@ namespace FireHare {
         }
 
         public drawPath(liPoints: Vector[], bFill: boolean = true, cColour: Colour = Canvas.DEFAULT_COLOUR) {
-            //this._cContext.strokeStyle = cColour.toString();
             this._cContext.fillStyle = cColour.toString();
 
             this._cContext.beginPath();

@@ -67,20 +67,28 @@ namespace FireHare.Equinox {
                 if(cObject.team.equals(cOtherObject.team))
                     return;    
                 
-                this._cCollisionManager.collisionCheck(cObject, cOtherObject);
+                if(this._cCollisionManager.collisionCheck(cObject, cOtherObject)) {
 
-                let eType: ObjectType = GameObject.GetType(cObject);
-                let eOtherType: ObjectType = GameObject.GetType(cOtherObject);
+                    let eType: ObjectType = GameObject.GetType(cObject);
+                    let eOtherType: ObjectType = GameObject.GetType(cOtherObject);
+    
+                    if(eType == ObjectType.Laser || eOtherType == ObjectType.Laser){
+                        cObject.applyDamage(10);
+                        cOtherObject.applyDamage(10);
+    
+                        if(eType != ObjectType.Laser){
+                            this.objectDamaged.raise(this, new Args.ObjectDamagedArgs(cObject.identifier, 10));
+                            cOtherObject.destroy();
+                        }
+                            
+    
+                        if(eOtherType != ObjectType.Laser) {
+                            this.objectDamaged.raise(this, new Args.ObjectDamagedArgs(cOtherObject.identifier, 10));
+                            cObject.destroy();
+                        }
+                    }
 
-                if(eType == ObjectType.Laser || eOtherType == ObjectType.Laser){
-                    cObject.applyDamage(10);
-                    cOtherObject.applyDamage(10);
-
-                    if(eType != ObjectType.Laser)
-                        this.objectDamaged.raise(this, new Args.ObjectDamagedArgs(cObject.identifier, 10));
-
-                    if(eOtherType != ObjectType.Laser)
-                        this.objectDamaged.raise(this, new Args.ObjectDamagedArgs(cOtherObject.identifier, 10));
+                    continue;
                 }
             }
         }
@@ -88,6 +96,12 @@ namespace FireHare.Equinox {
         ///
         /// PUBLIC
         ///
+
+        public generateShips() {
+            let cShip: Havok = new Havok(Guid.NewGuid());
+
+            this.addGameObject(cShip);
+        }
 
         public generateAsteroids(nSize: number = 1) {
             this.addGameObjects(Asteroid.GenerateAsteroidField(nSize));
@@ -284,15 +298,6 @@ namespace FireHare.Equinox {
 
         get gameObjects(): GameObject[] {
             return this._liGameObjects;
-
-            let liObjs: GameObject[] = [];
-
-            for(let i =0 ; i < this._liGameObjects.length; i++){
-                if(this._liGameObjects[i].isAlive)
-                    liObjs.push(this._liGameObjects[i]);
-            }
-
-            return liObjs;
         }
     }
 }

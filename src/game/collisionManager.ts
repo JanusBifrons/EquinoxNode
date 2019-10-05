@@ -4,7 +4,7 @@ namespace FireHare.Equinox {
         constructor() {            
         }
 
-        public collisionCheck(cObject: GameObject, cOtherObject: GameObject) {
+        public collisionCheck(cObject: GameObject, cOtherObject: GameObject): boolean {
             if(!this.sanityCollisionCheck(cObject, cOtherObject)) {
                 return;
             }
@@ -27,10 +27,12 @@ namespace FireHare.Equinox {
                         cOtherObject.collision(cForce);
 
                         // Object collision handled, return
-                        return;
+                        return true;
                     }
                 }
             }
+
+            return false;
         }
 
         ///

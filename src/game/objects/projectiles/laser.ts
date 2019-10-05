@@ -3,7 +3,7 @@ namespace FireHare.Equinox {
         constructor() {
             super();
 
-            this._nRadius = 1;
+            this._nRadius = 10;
         }
 
         ///
@@ -25,7 +25,7 @@ namespace FireHare.Equinox {
         ///
 
         public draw(cCanvas: Canvas) {
-            cCanvas.drawCircle(this.position, 2, Colour.Red);
+            cCanvas.drawCircle(this.position, this._nRadius, Colour.Red);
 
             super.draw(cCanvas);
         }

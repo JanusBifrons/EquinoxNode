@@ -105,9 +105,6 @@ namespace FireHare.Equinox {
 
                 cComponent.draw(cCanvas);
             }
-
-            
-            //cCanvas.drawCircle(this.position, this.radius, Colour.Red);
         }
 
         public applyForce(cForce: Vector) {
@@ -170,8 +167,7 @@ namespace FireHare.Equinox {
 
         protected onCollision(cForce: Vector) {
             this._cPosition = this._cPosition.add(cForce);
-
-            //this.applyForce(cForce.multiply(0.05));
+            this._cVelocity = this._cVelocity.multiply(0.995);
         }
 
         protected onDestroy() {

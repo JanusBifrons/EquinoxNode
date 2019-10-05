@@ -210,6 +210,8 @@ namespace FireHare.Equinox {
                 this._cGame.draw(this._cCanvas);
 
                 UI.DrawStatistics(this._cCanvas, this._cPlayer.ship.stats);
+
+                //this._cSocket.emit(Messages.PlayerSynchronise, new Args.PlayerSynchronizeArgs(this._cPlayer.ship));
             }
         }
 
