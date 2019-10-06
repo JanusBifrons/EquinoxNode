@@ -51,7 +51,8 @@ namespace FireHare.Equinox {
             this._cGame.objectDamaged.addHandler(this.onObjectDamaged.bind(this));
 
             //this._cGame.generateScrap();
-            this._cGame.generateAsteroids(10);
+            //this._cGame.generateAsteroids(10);
+            this._cGame.generateAI();
         }
 
         ///

@@ -4,6 +4,7 @@ namespace FireHare.Equinox {
         ///
         /// LOCAL
         ///
+        private _liAI: AI[];
         private _liGameObjects: GameObject[];
         private _cCollisionManager: CollisionManager;
 
@@ -18,6 +19,7 @@ namespace FireHare.Equinox {
         constructor() {
             this._cCollisionManager = new CollisionManager();
 
+            this._liAI = [];
             this._liGameObjects = [];
 
             this.objectDestroyed = new Event();
@@ -47,6 +49,18 @@ namespace FireHare.Equinox {
                 if(this._liGameObjects[i].team.equals(gTeam))
                     liObjects.push(this._liGameObjects[i]);
             } 
+
+            return liObjects;
+        }
+
+        private getGameObjects(eType: ObjectType = ObjectType.Ship): GameObject[] {
+            let liObjects: GameObject[] = [];
+
+            for(const cObject of this._liGameObjects) {
+                if(GameObject.GetType(cObject) === eType) {
+                    liObjects.push(cObject);
+                }
+            }
 
             return liObjects;
         }
@@ -96,6 +110,14 @@ namespace FireHare.Equinox {
         ///
         /// PUBLIC
         ///
+
+        public generateAI() {
+            let cShip: Havok = new Havok(Guid.NewGuid());
+
+            this._liAI.push(new AI(cShip));
+
+            this.addGameObject(cShip);
+        }
 
         public generateShips() {
             let cShip: Havok = new Havok(Guid.NewGuid());
@@ -248,6 +270,11 @@ namespace FireHare.Equinox {
         }
 
         public update() {
+            for(const AI of this._liAI) {
+                let liShips = this.getGameObjects(ObjectType.Ship) as Ship[];
+                AI.update(liShips);
+            }
+
             for(let i = 0; i < this._liGameObjects.length; i++) {
                 let cGameObject: GameObject = this._liGameObjects[i];
 
