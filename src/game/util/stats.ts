@@ -27,8 +27,8 @@ namespace FireHare.Equinox {
             // Set general
             this._nAccelleration = 0.001;
             this._nMinSpeed = 0;
-            this._nMaxSpeed = 1;
-            this._nRotationSpeed = 0.05;
+            this._nMaxSpeed = 20;
+            this._nRotationSpeed = 0.035;
 
             // Set shields
             this._nShieldRegenerationCap = 20000; // 1s

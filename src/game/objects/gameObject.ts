@@ -71,10 +71,14 @@ namespace FireHare.Equinox {
                 this._liComponents[i].update(this);
             }
 
+            
+
             if(hasValue(this._cRotationTarget))
                 this.rotateToDesiredTarget();
 
             this.updateMovement();
+
+            this._nSpeed = this._cVelocity.magnitude;
 
             this._cPosition.X += (this._cVelocity.X * Timer.ElapsedTime);
             this._cPosition.Y += (this._cVelocity.Y * Timer.ElapsedTime);

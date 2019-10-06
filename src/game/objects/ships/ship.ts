@@ -29,13 +29,10 @@ namespace FireHare.Equinox {
         }
 
         public accellerate() {
-            let nX: number = Math.cos(this.rotation) * (this._cStats.accelleration * (Timer.ElapsedTime));
-            let nY: number = Math.sin(this.rotation) * (this._cStats.accelleration * (Timer.ElapsedTime));
-
             this._bIsAccellerating = true;
             this._nAccellerationTimer = 0;
 
-            this.applyForce(new Vector(nX, nY));
+            this.onAccellerate();
         }
 
         public decellerate() {
@@ -56,9 +53,13 @@ namespace FireHare.Equinox {
         public update() {
             super.update();
 
+            if(this._bIsAccellerating) {
+                this.onAccellerate();
+            }
+
             this._nAccellerationTimer += Timer.ElapsedTime;
 
-            if(this._nAccellerationTimer > 500) {
+            if(this._nAccellerationTimer > 100) {
                 this._bIsAccellerating = false;
             }
         }
@@ -85,7 +86,7 @@ namespace FireHare.Equinox {
             Log.AddWorldItem(String.format("Hull: {0}", Math.round(this.stats.hull)), cPosition);
 
             cPosition = cPosition.add(new Vector(0, 10));
-            Log.AddWorldItem(String.format("Is Alive: {0}", this.isAlive), cPosition);
+            Log.AddWorldItem(String.format("Speed: {0}", this.speed), cPosition);
         }
 
         ///
@@ -102,9 +103,12 @@ namespace FireHare.Equinox {
                 else
                 {
                     let nDirection = Math.atan2(this.velocity.Y, this.velocity.X);
+
+                    // let nX: number = Math.cos(this.rotation) * (this._cStats.accelleration * (Timer.ElapsedTime));
+                    // let nY: number = Math.sin(this.rotation) * (this._cStats.accelleration * (Timer.ElapsedTime));
     
-                    let nX: number = Math.cos(nDirection) * this.stats.accelleration;
-                    let nY: number = Math.sin(nDirection) * this.stats.accelleration;
+                    let nX: number = Math.cos(nDirection) * (this._cStats.accelleration * (Timer.ElapsedTime));
+                    let nY: number = Math.sin(nDirection) * (this._cStats.accelleration * (Timer.ElapsedTime));
     
                     let cForce = new Vector(nX, nY).reverse();
     
@@ -112,6 +116,17 @@ namespace FireHare.Equinox {
                 }
             }
             
+        }
+
+        ///
+        /// EVENTS
+        ///
+
+        protected onAccellerate() {
+            let nX: number = Math.cos(this.rotation) * (this._cStats.accelleration * (Timer.ElapsedTime));
+            let nY: number = Math.sin(this.rotation) * (this._cStats.accelleration * (Timer.ElapsedTime));
+
+            this.applyForce(new Vector(nX, nY));
         }
     }
 }
