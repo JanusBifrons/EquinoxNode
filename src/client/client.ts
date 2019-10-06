@@ -72,6 +72,8 @@ namespace FireHare.Equinox {
         }
 
         private onObjectDestroyed(cArgs: Args.ObjectDestroyedArgs) {
+            console.log("Object destroyed!");
+
             this._cGame.destroyObject(cArgs);
         }
 

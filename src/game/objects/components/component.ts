@@ -10,6 +10,7 @@ namespace FireHare.Equinox.Components {
         private _cCenter: Vector;
         private _nScale: number;
         private _bMirror: boolean;
+        private _nIndex: number;
         
         
 
@@ -24,6 +25,8 @@ namespace FireHare.Equinox.Components {
 
         constructor(cOffset: Vector, bMirror: boolean = false, nScale: number = 1) {
             this._eType = Components.Unknown;
+
+            this._nIndex = 0;
 
             this._cOffset = cOffset;
 
@@ -218,14 +221,21 @@ namespace FireHare.Equinox.Components {
         /// PROPERTIES
         ///
 
-        get collisionPolygon(): SAT.Polygon {
+        get collisionItem(): CollisionItem {
+            return new CollisionPolygon(this._nIndex, this.collisionPolygon);
+        }
+
+        private get collisionPolygon(): SAT.Polygon {
             let liOutline: SAT.Vector[] = [];
 
             for(const cVector of this._liOutline) {
                 liOutline.push(cVector.toSAT());
             }
 
-            return new SAT.Polygon(this.position.toSAT(), liOutline);
+            let cPolygon: SAT.Polygon = new SAT.Polygon(this.position.toSAT(), liOutline);
+            cPolygon.rotate(this.rotation);
+
+            return cPolygon;
         }
 
         get position(): Vector {

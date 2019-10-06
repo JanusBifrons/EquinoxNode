@@ -26,6 +26,7 @@ namespace FireHare.Equinox {
         protected _nRadius: number;
         protected _cRotationTarget: Vector;
         protected _liComponents: Components.Component[];
+        protected _cCollisionCollection: CollisionCollection;
         protected _bIsAlive: boolean;
         protected _nRotation: number;
         protected _cStats: Stats;
@@ -45,6 +46,7 @@ namespace FireHare.Equinox {
             this._bIsAlive = true;
             this._nRadius = 60;
             this._liComponents = [];
+            this._cCollisionCollection = new CollisionCollection();
 
             this._cStats = new Stats();
 
@@ -230,6 +232,16 @@ namespace FireHare.Equinox {
 
         get speed(): number {
             return this._nSpeed;
+        }
+
+        get collisionCollection(): CollisionCollection {
+            let cCollisionCollection = new CollisionCollection();
+
+            for(const component of this._liComponents) {
+                cCollisionCollection.addItem(component.collisionItem);
+            }
+
+            return cCollisionCollection;
         }
 
         get components(): Components.Component[] {

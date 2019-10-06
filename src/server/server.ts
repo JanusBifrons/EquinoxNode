@@ -11,7 +11,7 @@
 
 /// DEBUG
 /// <reference path="../game/objects/scrap.ts" />
-/// <reference path="../game/collisionManager.ts" />
+/// <reference path="../game/collisionDetection/collisionManager.ts" />
 
 global["SAT"] = require('SAT');
 
@@ -95,6 +95,8 @@ namespace FireHare.Equinox {
 
         private onObjectDestroyed(sender: any, cArgs: Args.ObjectDestroyedArgs) {
             this._cGame.destroyObject(cArgs);
+
+            console.log("Object destroyed!");
 
             this._cSocketServer.emit(Messages.ObjectDestroyed, cArgs);
         }
