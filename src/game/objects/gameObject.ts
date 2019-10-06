@@ -16,8 +16,7 @@ namespace FireHare.Equinox {
         private _gTeam: Guid;
         private _cPosition: Vector;
         private _cVelocity: Vector;
-        private _nSpeed: number;
-        
+        private _nSpeed: number;    
 
         /// 
         /// PROTECTED
@@ -53,18 +52,6 @@ namespace FireHare.Equinox {
             this.destroyed = new Event();
         }
 
-        private rotateToDesiredTarget() {
-            let nDesiredRotation: number = Vector.DirectionTo(this.position, this._cRotationTarget);
-
-            let nDiff: number = Helper.WrapRotation(nDesiredRotation - this._nRotation);
-            nDiff = Helper.Clamp(nDiff, -this._cStats.rotationSpeed, this._cStats.rotationSpeed);
-
-            if(Math.abs(nDiff) < this._cStats.rotationSpeed)
-                this._nRotation = Helper.WrapRotation(nDesiredRotation);
-            else
-                this._nRotation = Helper.WrapRotation(this._nRotation + nDiff);
-        }
-
         ///
         /// PUBLIC
         ///
@@ -87,12 +74,7 @@ namespace FireHare.Equinox {
             if(hasValue(this._cRotationTarget))
                 this.rotateToDesiredTarget();
 
-            this._nSpeed = this._cVelocity.magnitude;
-
-            if(this._nSpeed > this._cStats.maxSpeed) {
-                this._cVelocity.X += (this._cVelocity.X / this._nSpeed) * (this._cStats.maxSpeed - this._nSpeed);
-		        this._cVelocity.Y += (this._cVelocity.Y / this._nSpeed) * (this._cStats.maxSpeed - this._nSpeed);
-            }
+            this.updateMovement();
 
             this._cPosition.X += (this._cVelocity.X * Timer.ElapsedTime);
             this._cPosition.Y += (this._cVelocity.Y * Timer.ElapsedTime);
@@ -114,8 +96,7 @@ namespace FireHare.Equinox {
         }
 
         public stop() {
-            this._cVelocity.X = 0;
-            this._cVelocity.Y = 0;
+            this._cVelocity = Vector.Zero;
         }
 
         public destroy() {
@@ -128,8 +109,33 @@ namespace FireHare.Equinox {
         }
 
         ///
+        /// PROTECTED
+        ///
+
+        protected updateMovement() {
+            this._nSpeed = this._cVelocity.magnitude;
+
+            if(this._nSpeed > this._cStats.maxSpeed) {
+                this._cVelocity.X += (this._cVelocity.X / this._nSpeed) * (this._cStats.maxSpeed - this._nSpeed);
+		        this._cVelocity.Y += (this._cVelocity.Y / this._nSpeed) * (this._cStats.maxSpeed - this._nSpeed);
+            }
+        }
+
+        ///
         /// PRIVATE
         /// 
+
+        private rotateToDesiredTarget() {
+            let nDesiredRotation: number = Vector.DirectionTo(this.position, this._cRotationTarget);
+
+            let nDiff: number = Helper.WrapRotation(nDesiredRotation - this._nRotation);
+            nDiff = Helper.Clamp(nDiff, -this._cStats.rotationSpeed, this._cStats.rotationSpeed);
+
+            if(Math.abs(nDiff) < this._cStats.rotationSpeed)
+                this._nRotation = Helper.WrapRotation(nDesiredRotation);
+            else
+                this._nRotation = Helper.WrapRotation(this._nRotation + nDiff);
+        }
 
         ///
         /// STATIC

@@ -4,6 +4,8 @@ namespace FireHare.Equinox {
         ///
         /// LOCAL
         ///
+        private _bIsAccellerating: boolean;
+        private _nAccellerationTimer: number;
 
         ///
         /// EVENTS
@@ -13,9 +15,9 @@ namespace FireHare.Equinox {
         constructor(gTeam?: Guid) {
             super(gTeam);
 
-            this.fired = new Event();
+            this._bIsAccellerating = false;
 
-            //this.stats.applyDamage(99);
+            this.fired = new Event();
         }
 
         ///
@@ -29,6 +31,9 @@ namespace FireHare.Equinox {
         public accellerate() {
             let nX: number = Math.cos(this.rotation) * (this._cStats.accelleration * (Timer.ElapsedTime));
             let nY: number = Math.sin(this.rotation) * (this._cStats.accelleration * (Timer.ElapsedTime));
+
+            this._bIsAccellerating = true;
+            this._nAccellerationTimer = 0;
 
             this.applyForce(new Vector(nX, nY));
         }
@@ -50,14 +55,19 @@ namespace FireHare.Equinox {
 
         public update() {
             super.update();
+
+            this._nAccellerationTimer += Timer.ElapsedTime;
+
+            if(this._nAccellerationTimer > 500) {
+                this._bIsAccellerating = false;
+            }
         }
 
         public draw(cCanvas: Canvas) {
             super.draw(cCanvas);
 
             cCanvas.drawCircle(this.position, this.radius, Colour.Blue);
-
-                        
+      
             let cPosition: Vector = new Vector(this.position.X, this.position.Y + 50);
 
             Log.AddWorldItem(String.format("Id: {0}", this.identifier), cPosition);
@@ -76,6 +86,32 @@ namespace FireHare.Equinox {
 
             cPosition = cPosition.add(new Vector(0, 10));
             Log.AddWorldItem(String.format("Is Alive: {0}", this.isAlive), cPosition);
+        }
+
+        ///
+        /// PROTECTED
+        ///
+
+        protected updateMovement() {
+            super.updateMovement();
+
+            if(!this._bIsAccellerating) {
+                if(this.speed < this.stats.accelleration) {
+                    this.stop();
+                }
+                else
+                {
+                    let nDirection = Math.atan2(this.velocity.Y, this.velocity.X);
+    
+                    let nX: number = Math.cos(nDirection) * this.stats.accelleration;
+                    let nY: number = Math.sin(nDirection) * this.stats.accelleration;
+    
+                    let cForce = new Vector(nX, nY).reverse();
+    
+                    this.applyForce(cForce);
+                }
+            }
+            
         }
     }
 }
