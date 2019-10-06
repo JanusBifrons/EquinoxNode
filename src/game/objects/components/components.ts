@@ -5,6 +5,7 @@ namespace FireHare.Equinox.Components {
         RearWing,
         Pad,
         Asteroid,
+        Shield,
         Unknown
     }
 }

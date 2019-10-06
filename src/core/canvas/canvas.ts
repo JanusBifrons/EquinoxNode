@@ -124,10 +124,13 @@ namespace FireHare {
 
             this._cContext.beginPath();
 
-            this._cContext.moveTo(liPoints[0].X, liPoints[0].Y);
-
-            for(let i = 1; i < liPoints.length; i++) {
-                this._cContext.lineTo(liPoints[i].X, liPoints[i].Y);
+            for(let i = 0; i < liPoints.length; i++) {
+                if(i === 0) {
+                    this._cContext.moveTo(liPoints[0].X, liPoints[0].Y);
+                }
+                else{
+                    this._cContext.lineTo(liPoints[i].X, liPoints[i].Y);
+                }
             }
 
             this._cContext.closePath();

@@ -6,6 +6,8 @@ namespace FireHare.Equinox {
         constructor(nRadius: number, liOutline: Vector[] = []) {
             super(Guid.NewGuid());
 
+            this._cStats = new Stats(0, 99999, 99999);
+
             this._nRadius = nRadius;
 
             this._liComponents.push(new Components.Asteroid(this._nRadius, liOutline));

@@ -23,7 +23,7 @@ namespace FireHare.Equinox {
         private _nHull: number;
         private _nHullRegen: number;
 
-        constructor() {
+        constructor(nShieldCap: number = 0, nArmourCap: number = 0, nHull: number = 100) {
             // Set general
             this._nAccelleration = 0.001;
             this._nMinSpeed = 0;
@@ -31,22 +31,20 @@ namespace FireHare.Equinox {
             this._nRotationSpeed = 0.05;
 
             // Set shields
-            this._nShieldRegenerationCap = 1000; // 1s
-            this._nShieldRegen = 0;
-            this._nShieldCap = 100;
-            this._nShieldCap = 0;
+            this._nShieldRegenerationCap = 20000; // 1s
+            this._nShieldRegen = 20000;
+            this._nShieldCap = nShieldCap;
             this._nShields = this._nShieldCap;
             
             // Set armour
-            this._nArmourCap = 100;
-            this._nArmourCap = 0;
+            this._nArmourCap = nArmourCap;
             this._nArmour = this._nArmourCap;
-            this._nArmourRegen = 1000;
+            this._nArmourRegen = 0;
             
             // Set hull
-            this._nHullCap = 200;
+            this._nHullCap = nHull;
             this._nHull = this._nHullCap;
-            this._nHullRegen = 1000;
+            this._nHullRegen = 2.5;
         }
 
         ///
@@ -93,14 +91,14 @@ namespace FireHare.Equinox {
                 }
             }
 
-            Log.AddItem(String.format("Before applying {0} damage to hull ({1})", nDamage, this._nHull));
+            //Log.AddItem(String.format("Before applying {0} damage to hull ({1})", nDamage, this._nHull));
             
             if(this._nHull > nDamage)
             {
                 // Impact on the health
                 this._nHull -= nDamage;
 
-                Log.AddItem(String.format("After applying {0} damage to hull ({1})", nDamage, this._nHull));
+                //Log.AddItem(String.format("After applying {0} damage to hull ({1})", nDamage, this._nHull));
             }
             else
             {

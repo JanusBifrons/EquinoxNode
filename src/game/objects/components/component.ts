@@ -23,7 +23,7 @@ namespace FireHare.Equinox.Components {
         protected _cSecondaryColour: Colour;
         protected _bUpdateCenter: boolean;
 
-        constructor(cOffset: Vector, bMirror: boolean = false, nScale: number = 1) {
+        constructor(cOffset: Vector = Vector.Zero, bMirror: boolean = false, nScale: number = 1) {
             this._eType = Components.Unknown;
 
             this._nIndex = 0;

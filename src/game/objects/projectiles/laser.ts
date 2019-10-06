@@ -4,6 +4,8 @@ namespace FireHare.Equinox {
             super();
 
             this._nRadius = 10;
+
+            this._liComponents.push(new Components.Laser());
         }
 
         ///
@@ -23,12 +25,6 @@ namespace FireHare.Equinox {
         ///
         /// PUBLIC
         ///
-
-        public draw(cCanvas: Canvas) {
-            cCanvas.drawCircle(this.position, this._nRadius, Colour.Red);
-
-            super.draw(cCanvas);
-        }
 
         ///
         /// EVENT HANDLERS

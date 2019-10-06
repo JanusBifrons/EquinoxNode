@@ -14,6 +14,8 @@ namespace FireHare.Equinox {
             super(gTeam);
 
             this.fired = new Event();
+
+            //this.stats.applyDamage(99);
         }
 
         ///

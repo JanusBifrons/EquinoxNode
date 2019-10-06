@@ -218,7 +218,9 @@ namespace FireHare.Equinox {
                 return;
             }
 
-            this.addGameObjects(Scrap.FromArgs(cObject, cArgs));
+            if(GameObject.GetType(cObject) === ObjectType.Ship) {
+                this.addGameObjects(Scrap.FromArgs(cObject, cArgs));
+            }
 
             this.removeGameObject(cObject.identifier);
         }

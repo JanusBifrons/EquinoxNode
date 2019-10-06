@@ -157,7 +157,7 @@ namespace FireHare.Equinox {
         ///
 
         protected onApplyDamage(nTotalDamage: number) {
-            Log.AddItem(String.format("Applying {0} damage to {1}", nTotalDamage, this.identifier.toString()));
+            //Log.AddItem(String.format("Applying {0} damage to {1}", nTotalDamage, this.identifier.toString()));
 
             if(this._cStats.applyDamage(nTotalDamage))
                 this.destroy();
