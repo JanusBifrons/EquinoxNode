@@ -8,7 +8,7 @@
     "@types/socket.io": "^2.1.2",
     "@types/typescript": "^2.0.0",
     "@types/uuid": "^3.4.4",
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "sat": "^0.8.0",
     "socket.io": "^2.2.0",
     "typescript": "^3.3.4000",
